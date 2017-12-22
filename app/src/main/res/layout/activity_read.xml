@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     >
 
-    <com.will.weiyuekotlin.widget.WebViewScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -113,7 +113,7 @@
                 </LinearLayout>
         </LinearLayout>
 
-    </com.will.weiyuekotlin.widget.WebViewScrollView>
+    </ScrollView>
 
 
     <RelativeLayout

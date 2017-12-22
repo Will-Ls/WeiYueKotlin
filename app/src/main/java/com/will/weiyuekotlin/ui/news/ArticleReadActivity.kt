@@ -7,7 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewCompat
-import android.support.v4.widget.NestedScrollView
 import android.text.TextUtils
 import android.view.View
 import android.webkit.WebSettings
@@ -27,8 +26,6 @@ import com.will.weiyuekotlin.utils.getTimestampString
 import com.will.weiyuekotlin.utils.string2Date
 import com.will.weiyuekotlin.widget.SimpleMultiStateView
 import kotlinx.android.synthetic.main.activity_artcleread.*
-
-
 
 
 /**
@@ -61,13 +58,15 @@ class ArticleReadActivity : BaseActivity<ArticleReadPresenter>(), ArticleReadCon
     override fun bindView(view: View, savedInstanceState: Bundle?) {
         setWebViewSetting()
         setStatusBarColor(ContextCompat.getColor(this, R.color.statusBar), 30)
-        scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
+        scrollView.setScrollViewListener { _, _, y, _, _ ->
             when {
-                scrollY > constraintLayout.height -> rl_top.visibility = View.VISIBLE
+                y > constraintLayout.height -> rl_top.visibility = View.VISIBLE
                 else -> rl_top.visibility = View.GONE
             }
-        })
+        }
+
         iv_back.setOnClickListener { finish() }
+        //修改了点代码
     }
 
     override fun initData() {}
@@ -108,6 +107,8 @@ class ArticleReadActivity : BaseActivity<ArticleReadPresenter>(), ArticleReadCon
     @SuppressLint("SetJavaScriptEnabled")
     private fun setWebViewSetting() {
         webView.settings.javaScriptEnabled = true
+        webView.isVerticalScrollBarEnabled = false
+        webView.isHorizontalScrollBarEnabled = false
         webView.settings.setAppCacheEnabled(true)
         webView.settings.allowFileAccessFromFileURLs = true
         webView.settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN

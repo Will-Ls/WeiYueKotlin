@@ -73,6 +73,8 @@ class ReadActivity : BaseActivity<BaseContract.BasePresenter>() {
     private fun setWebViewSetting() {
         webView.settings.javaScriptEnabled = true
         webView.settings.setAppCacheEnabled(true)
+        webView.isVerticalScrollBarEnabled = false
+        webView.isHorizontalScrollBarEnabled = false
         webView.settings.allowFileAccessFromFileURLs = true
         webView.settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
         webView.settings.loadsImagesAutomatically = true
