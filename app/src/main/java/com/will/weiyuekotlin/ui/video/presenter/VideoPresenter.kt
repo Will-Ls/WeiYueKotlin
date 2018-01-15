@@ -26,7 +26,7 @@ constructor(private var mNewsApi: NewsApi) : BasePresenter<VideoContract.View>()
                 .applySchedulers()
                 .compose(mView!!.bindToLife<List<VideoChannelBean>>())
                 .subscribe(object : BaseObserver<List<VideoChannelBean>>() {
-                    override fun onSucceed(t: List<VideoChannelBean>?) {
+                    override fun onSuccess(t: List<VideoChannelBean>?) {
                         mView?.loadVideoChannel(t)
                     }
 
@@ -50,7 +50,7 @@ constructor(private var mNewsApi: NewsApi) : BasePresenter<VideoContract.View>()
                 .applySchedulers()
                 .compose(mView!!.bindToLife<List<VideoDetailBean>>())
                 .subscribe(object : BaseObserver<List<VideoDetailBean>>() {
-                    override fun onSucceed(t: List<VideoDetailBean>?) {
+                    override fun onSuccess(t: List<VideoDetailBean>?) {
                         when {
                             page > 1 -> mView!!.loadMoreVideoDetails(t)
                             else -> mView!!.loadVideoDetails(t)

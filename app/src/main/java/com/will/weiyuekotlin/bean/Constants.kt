@@ -6,8 +6,8 @@ package com.will.weiyuekotlin.bean
  * date: 2017/9/2 .
  */
 object Constants {
-
-    val uid = "863058036126104"
+    //864678036850608 如果数据太少，请自行抓包凤凰新闻 获取数据时的参数中的 uid 更换
+    val uid = "864678036850608"
 
     //头条
     val TOPNEWS_ID = "SYLB10,SYDT10"

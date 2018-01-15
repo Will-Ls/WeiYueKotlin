@@ -40,7 +40,7 @@ constructor(private var mJanDanApi: JanDanApi) : BasePresenter<JanDanContract.Vi
                 .applySchedulers()
                 .compose(mView?.bindToLife<FreshNewsBean>())
                 .subscribe(object : BaseObserver<FreshNewsBean>() {
-                    override fun onSucceed(t: FreshNewsBean?) {
+                    override fun onSuccess(t: FreshNewsBean?) {
                         when {
                             page > 1 -> mView?.loadMoreFreshNews(t)
                             else -> mView?.loadFreshNews(t)
@@ -80,7 +80,7 @@ constructor(private var mJanDanApi: JanDanApi) : BasePresenter<JanDanContract.Vi
                     jdDetailBean
                 })
                 .subscribe(object : BaseObserver<JdDetailBean>() {
-                    override fun onSucceed(t: JdDetailBean?) {
+                    override fun onSuccess(t: JdDetailBean?) {
                         when {
                             page > 1 -> mView?.loadMoreDetailData(type, t)
                             else -> mView?.loadDetailData(type, t)

@@ -32,14 +32,16 @@ constructor(private var mNewsApi: NewsApi) : BasePresenter<DetailContract.View>(
     override fun getData(id: String, action: String, pullNum: Int) {
         mNewsApi.getNewsDetail(id, action, pullNum)
                 .applySchedulers()
-                .filter { newsDetail ->
-                    if (NewsUtils.isBannerNews(newsDetail)) {
-                        mView?.loadBannerData(newsDetail)
+                .map { t: List<NewsDetail> ->
+                    t.forEach { t: NewsDetail? ->
+                        if (NewsUtils.isBannerNews(t!!)) {
+                            mView?.loadBannerData(t)
+                        }
+                        if (NewsUtils.isTopNews(t)) {
+                            mView?.loadTopNewsData(t)
+                        }
                     }
-                    if (NewsUtils.isTopNews(newsDetail)) {
-                        mView?.loadTopNewsData(newsDetail)
-                    }
-                    NewsUtils.isListNews(newsDetail)
+                    t[0]
                 }
                 .map { newsDetail ->
                     val iterator = newsDetail.item?.listIterator()
@@ -79,7 +81,7 @@ constructor(private var mNewsApi: NewsApi) : BasePresenter<DetailContract.View>(
                     newsDetail.item!!
                 }.compose(mView?.bindToLife<List<NewsDetail.ItemBean>>())
                 .subscribe(object : BaseObserver<List<NewsDetail.ItemBean>>() {
-                    override fun onSucceed(t: List<NewsDetail.ItemBean>?) {
+                    override fun onSuccess(t: List<NewsDetail.ItemBean>?) {
                         when {
                             action != NewsApi.ACTION_UP -> mView?.loadData(t)
                             else -> mView?.loadMoreData(t)

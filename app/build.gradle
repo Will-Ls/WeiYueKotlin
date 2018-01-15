@@ -66,6 +66,11 @@ dependencies {
     implementation rootProject.ext.dependencies["eventbus"]
     implementation rootProject.ext.dependencies["gif-drawable"]
 
+    compile("com.github.hotchemi:permissionsdispatcher:3.1.0") {
+        // if you don't use android.app.Fragment you can exclude support for them
+        exclude module: "support-v13"
+    }
+    annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:3.1.0"
     implementation rootProject.ext.dependencies["litepal"]
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'

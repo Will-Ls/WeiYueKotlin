@@ -55,9 +55,8 @@ class NewsApi(private val mService: NewsApiService) {
      * @param pullNum 操作次数 累加
      * @return
      */
-    fun getNewsDetail(id: String, @Actions action: String, pullNum: Int): Observable<NewsDetail>
+    fun getNewsDetail(id: String, @Actions action: String, pullNum: Int): Observable<List<NewsDetail>>
             = mService.getNewsDetail(id, action, pullNum)
-            .flatMap { newsDetails -> Observable.fromIterable(newsDetails) }
 
     /**
      * 获取新闻文章详情

@@ -11,14 +11,14 @@ import io.reactivex.disposables.Disposable
  */
 abstract class BaseObserver<T> : Observer<T> {
 
-    abstract fun onSucceed(t: T?)
+    abstract fun onSuccess(t: T?)
 
     abstract fun onFail(e: Throwable)
 
     override fun onSubscribe(@NonNull d: Disposable) {}
 
     override fun onNext(@NonNull t: T) {
-        onSucceed(t)
+        onSuccess(t)
     }
 
     override fun onError(@NonNull e: Throwable) {

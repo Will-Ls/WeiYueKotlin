@@ -99,7 +99,7 @@ class ReadActivity : BaseActivity<BaseContract.BasePresenter>() {
                 .applySchedulers()
                 .compose(this.bindToLifecycle<FreshNewsArticleBean>())
                 .subscribe(object : BaseObserver<FreshNewsArticleBean>() {
-                    override fun onSucceed(t: FreshNewsArticleBean?) {
+                    override fun onSuccess(t: FreshNewsArticleBean?) {
                         when (t) {
                             null -> showError()
                             else -> {

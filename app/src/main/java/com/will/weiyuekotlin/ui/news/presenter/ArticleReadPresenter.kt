@@ -28,7 +28,7 @@ constructor(private var mNewsApi: NewsApi) : BasePresenter<ArticleReadContract.V
                 .applySchedulers()
                 .compose(mView?.bindToLife<NewsArticleBean>())
                 .subscribe(object : BaseObserver<NewsArticleBean>(){
-                    override fun onSucceed(t: NewsArticleBean?) {
+                    override fun onSuccess(t: NewsArticleBean?) {
                         mView?.loadData(t)
                     }
 

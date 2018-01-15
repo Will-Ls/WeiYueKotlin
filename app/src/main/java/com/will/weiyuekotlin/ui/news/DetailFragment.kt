@@ -116,7 +116,7 @@ class DetailFragment : BaseFragment<DetailPresenter>(), DetailContract.View {
 
                         itemBean?.style?.let {
                             when {
-                                //根据当前 view 的绝对坐标 判断上下箭头的可见性  具体参考 http://www.jianshu.com/p/09acbcf28635
+                            //根据当前 view 的绝对坐标 判断上下箭头的可见性  具体参考 http://www.jianshu.com/p/09acbcf28635
                                 ContextUtils.getSreenWidth(MyApp.instance) - 50 - location[1] < ContextUtils.dip2px(MyApp.instance, 80F)
                                 -> newsDelPop
                                         ?.anchorView(view)
@@ -158,7 +158,7 @@ class DetailFragment : BaseFragment<DetailPresenter>(), DetailContract.View {
     /**
      * 初始化屏蔽弹窗
      */
-    private fun initDelPop(){
+    private fun initDelPop() {
         newsDelPop = NewsDelPop(activity)
                 .alignCenter(false)
                 .widthScale(0.95f)
@@ -229,7 +229,10 @@ class DetailFragment : BaseFragment<DetailPresenter>(), DetailContract.View {
      */
     override fun loadData(itemBeanList: List<NewsDetail.ItemBean>?) {
         when (itemBeanList) {
-            null -> showError()
+            null -> {
+                showError()
+                mPtrFrameLayout.refreshComplete()
+            }
             else -> {
                 downPullNum++
                 if (isRemoveHeaderView) {
@@ -249,8 +252,9 @@ class DetailFragment : BaseFragment<DetailPresenter>(), DetailContract.View {
      * @param itemBeanList
      */
     override fun loadMoreData(itemBeanList: List<NewsDetail.ItemBean>?) {
-        when (itemBeanList) {
-            null -> detailAdapter?.loadMoreFail()
+        when {
+            itemBeanList == null -> detailAdapter?.loadMoreFail()
+            itemBeanList.isEmpty() -> detailAdapter?.loadMoreFail()
             else -> {
                 upPullNum++
                 detailAdapter?.addData(itemBeanList)
