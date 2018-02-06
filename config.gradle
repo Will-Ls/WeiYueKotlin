@@ -6,8 +6,8 @@ ext {
             applicationId          : "com.will.weiyuekotlin",
             minSdkVersion          : 19,
             targetSdkVersion       : 25,
-            versionCode            : 1,
-            versionName            : "1.0"
+            versionCode            : 3,
+            versionName            : "1.2.1"
     ]
 
     dependVersion = [

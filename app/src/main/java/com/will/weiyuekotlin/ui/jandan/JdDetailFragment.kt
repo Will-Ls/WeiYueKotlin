@@ -15,6 +15,7 @@ import com.will.weiyuekotlin.bean.JdBaseBean
 import com.will.weiyuekotlin.bean.JdDetailBean
 import com.will.weiyuekotlin.component.ApplicationComponent
 import com.will.weiyuekotlin.component.DaggerHttpComponent
+import com.will.weiyuekotlin.net.JanDanApi
 import com.will.weiyuekotlin.ui.base.BaseFragment
 import com.will.weiyuekotlin.ui.jandan.contract.JanDanContract
 import com.will.weiyuekotlin.ui.jandan.presenter.JanDanPresenter
@@ -82,7 +83,11 @@ class JdDetailFragment constructor
         mAdapter.setLoadMoreView(CustomLoadMoreView())
         mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN)
         mAdapter.setOnLoadMoreListener({ mPresenter?.getData(type, pageNum) }, recyclerView)
-
+        mAdapter.setOnItemClickListener { adapter, view, position ->
+            if (type == JanDanApi.TYPE_FRESH) {
+                ReadActivity.launch(activity, adapter.getItem(position) as FreshNewsBean.PostsBean)
+            }
+        }
     }
 
     override fun initData() {
