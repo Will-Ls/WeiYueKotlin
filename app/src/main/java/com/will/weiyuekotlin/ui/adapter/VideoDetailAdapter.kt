@@ -22,23 +22,40 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
 class VideoDetailAdapter(private var context: Context, @LayoutRes layoutResId: Int, data: List<VideoDetailBean.ItemBean>?)
     : BaseQuickAdapter<VideoDetailBean.ItemBean, BaseViewHolder>(layoutResId, data) {
 
+    var currentPlayIndex = -1
+    var lastPlayIndex = -1
     override fun convert(viewHolder: BaseViewHolder, itemBean: VideoDetailBean.ItemBean) {
         // viewHolder.setText(R.id.tv_title, itemBean.getTitle());
         val jcVideoPlayerStandard = viewHolder.getView<JCVideoPlayerStandard>(R.id.videoplayer)
         jcVideoPlayerStandard.setUp(itemBean.video_url, JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, itemBean.title)
-        JCVideoPlayer.setJcUserAction({ type, _, _, _ ->
+        JCVideoPlayer.setJcUserAction { type, _, _, _ ->
             when (type) {
                 JCUserAction.ON_CLICK_START_ICON -> {
+                    currentPlayIndex = mData.indexOf(itemBean)
                     viewHolder.getView<View>(R.id.tv_videoduration).visibility = View.GONE
                 }
             }
-        })
+        }
         ImageLoaderUtil.LoadImage(context, itemBean.image, jcVideoPlayerStandard.thumbImageView)
         viewHolder.setText(R.id.tv_videoduration, conversionTime(itemBean.duration))
         itemBean.playTime?.let {
             viewHolder.setText(R.id.tv_playtime, conversionPlayTime(Integer.valueOf(it)!!))
         }
 
+        if (lastPlayIndex != currentPlayIndex && currentPlayIndex == mData.indexOf(itemBean)) {
+            jcVideoPlayerStandard.startVideo()
+        }
+
+    }
+
+    fun play(currentPlayIndex: Int) {
+        if (this.currentPlayIndex == currentPlayIndex) {
+            return
+        }
+        JCVideoPlayer.releaseAllVideos()
+        lastPlayIndex = this.currentPlayIndex
+        this.currentPlayIndex = currentPlayIndex
+        notifyDataSetChanged()
     }
 
 }

@@ -54,6 +54,7 @@ class MainActivity : BaseActivity<BaseContract.BasePresenter>() {
 
         mBootomBar.setOnTabSelectedListener(object : BottomBar.OnTabSelectedListener {
             override fun onTabSelected(position: Int, prePosition: Int) {
+                JCVideoPlayer.releaseAllVideos()
                 supportDelegate.showHideFragment(mFragments[position], mFragments[prePosition])
             }
 

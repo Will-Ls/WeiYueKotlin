@@ -56,7 +56,7 @@ class JanDanFragment : BaseFragment<BasePresenter<BaseContract.BaseView>>() {
         strings.add("段子")
         mJanDanPagerAdapter = JanDanPagerAdapter(childFragmentManager, strings)
         viewpager.adapter = mJanDanPagerAdapter
-        viewpager.offscreenPageLimit = 1
+        viewpager.offscreenPageLimit = 5
         viewpager.setCurrentItem(0, false)
         tablayout.setupWithViewPager(viewpager, true)
     }

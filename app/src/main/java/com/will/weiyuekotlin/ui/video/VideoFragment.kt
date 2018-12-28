@@ -1,6 +1,7 @@
 package com.will.weiyuekotlin.ui.video
 
 import android.os.Bundle
+import android.support.v4.view.ViewPager
 import android.view.View
 import com.will.weiyuekotlin.R
 import com.will.weiyuekotlin.bean.VideoChannelBean
@@ -12,6 +13,7 @@ import com.will.weiyuekotlin.ui.base.BaseFragment
 import com.will.weiyuekotlin.ui.video.contract.VideoContract
 import com.will.weiyuekotlin.ui.video.presenter.VideoPresenter
 import com.will.weiyuekotlin.widget.SimpleMultiStateView
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
 import kotlinx.android.synthetic.main.fragment_video.*
 
 
@@ -60,9 +62,20 @@ class VideoFragment : BaseFragment<VideoPresenter>(), VideoContract.View {
     override fun loadVideoChannel(channelBean: List<VideoChannelBean>?) {
         mVideoPagerAdapter = VideoPagerAdapter(childFragmentManager, channelBean?.get(0))
         viewPager.adapter = mVideoPagerAdapter
-        viewPager.offscreenPageLimit = 1
+        viewPager.offscreenPageLimit = 5
         viewPager.setCurrentItem(0, false)
         tabLayout.setupWithViewPager(viewPager, true)
+        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                JCVideoPlayer.releaseAllVideos()
+            }
+
+            override fun onPageSelected(position: Int) {
+            }
+        })
     }
 
     override fun loadVideoDetails(detailBean: List<VideoDetailBean>?) {
