@@ -65,7 +65,7 @@ ext {
             "lottie"                : "com.airbnb.android:lottie:2.1.0",
             "progressbar"           : "me.zhanghai.android.materialprogressbar:library:1.4.1",
             "transitionhelper"      : "me.immortalz:transitionhelper:1.0.6",
-            "swipebacklayout"       : "cn.bingoogolapple:bga-swipebacklayout:1.1.0@aar",
+            "swipebacklayout"       : "cn.bingoogolapple:bga-swipebacklayout:1.2.0@aar",
             "gif-drawable"          : "pl.droidsonroids.gif:android-gif-drawable:1.2.8",
 
             //Event

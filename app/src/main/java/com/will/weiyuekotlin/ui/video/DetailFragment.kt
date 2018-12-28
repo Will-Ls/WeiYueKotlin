@@ -5,6 +5,7 @@ import `in`.srain.cube.views.ptr.PtrFrameLayout
 import `in`.srain.cube.views.ptr.PtrHandler
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.will.weiyuekotlin.R
@@ -18,6 +19,7 @@ import com.will.weiyuekotlin.ui.video.contract.VideoContract
 import com.will.weiyuekotlin.ui.video.presenter.VideoPresenter
 import com.will.weiyuekotlin.widget.CustomLoadMoreView
 import com.will.weiyuekotlin.widget.SimpleMultiStateView
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
 import kotlinx.android.synthetic.main.fragment_detail.*
 
 
@@ -62,6 +64,9 @@ class DetailFragment : BaseFragment<VideoPresenter>(), VideoContract.View {
             }
 
             override fun onRefreshBegin(frame: PtrFrameLayout) {
+                detailAdapter.lastPlayIndex=-1
+                detailAdapter.currentPlayIndex=-1
+                JCVideoPlayer.releaseAllVideos()
                 pageNum = 1
                 mPresenter?.getVideoDetails(pageNum, "list", typeId!!)
             }
@@ -74,6 +79,31 @@ class DetailFragment : BaseFragment<VideoPresenter>(), VideoContract.View {
         detailAdapter.setLoadMoreView(CustomLoadMoreView())
         detailAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN)
         detailAdapter.setOnLoadMoreListener({ mPresenter?.getVideoDetails(pageNum, "list", typeId!!) }, mRecyclerView)
+
+        //添加滑动自动播放
+        mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                when (newState) {
+                    RecyclerView.SCROLL_STATE_IDLE -> {
+                        val layoutManager = mRecyclerView.layoutManager as LinearLayoutManager
+                        //获取第一个可见view的位置
+                        val currentVisiableItemPosition: Int = layoutManager.findFirstVisibleItemPosition()
+                        autoPlayNext(currentVisiableItemPosition)
+
+                    }
+                }
+            }
+
+        })
+    }
+
+    /**
+     * 播放下一个
+     */
+    private fun autoPlayNext(currentVisiableItemPosition: Int) {
+        detailAdapter.play(currentVisiableItemPosition + 1)
     }
 
     override fun initData() {

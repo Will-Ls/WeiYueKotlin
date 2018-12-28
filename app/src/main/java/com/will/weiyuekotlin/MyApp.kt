@@ -1,6 +1,6 @@
 package com.will.weiyuekotlin
 
-import cn.bingoogolapple.swipebacklayout.BGASwipeBackManager
+import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper
 import com.will.weiyuekotlin.component.ApplicationComponent
 import com.will.weiyuekotlin.component.DaggerApplicationComponent
 import com.will.weiyuekotlin.module.ApplicationModule
@@ -32,6 +32,6 @@ class MyApp : LitePalApplication() {
         //初始化数据库
         LitePal.initialize(this)
         //初始化侧滑返回组件
-        BGASwipeBackManager.getInstance().init(this)
+        BGASwipeBackHelper.init(this, null)
     }
 }
